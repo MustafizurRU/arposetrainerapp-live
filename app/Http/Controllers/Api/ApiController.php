@@ -18,6 +18,7 @@ class ApiController extends Controller
                 $token = $user->createToken('auth_token')->plainTextToken;
                 return response()->json([
                     'status' => 'success',
+                    'message' => 'Login Successfully!',
                     'token' => $token
                 ]);
             }
