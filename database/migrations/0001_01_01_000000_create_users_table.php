@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('current_level', ['level1', 'level2', 'level3', 'level4', 'level5'])->default('level1');
+            $table->integer('total_score')->default(0);
+            $table->enum('overall_performance', ['poor', 'fair', 'moderate', 'good', 'excellent'])->default('poor');
             $table->rememberToken();
             $table->timestamps();
         });

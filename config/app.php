@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'AR Pose Trainer App'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://arposetrainerapp.rf.gd'),
+    'url' => env('APP_URL', 'https://arposetrainerapp.onrender.com'),
 
     /*
     |--------------------------------------------------------------------------
