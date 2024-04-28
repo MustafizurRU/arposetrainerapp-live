@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -93,9 +95,101 @@ class ApiController extends Controller
             $item->level_performance = $request->level_performance;
             $item->pose_image_url = $request->pose_image_url;
             $item->save();
+            // Find the user by ID
+            $user = User::findOrFail(Auth::id());
+            // Calculate total score based on the sum of level_wise_score from items table
+            $totalScore = $user->items()->sum('level_wise_score');
+
+            // Calculate overall performance based on average of level_performance from items table
+            $totalItems = $user->items()->count();
+            $averagePerformance = $totalItems > 0 ? $user->items()->avg(DB::raw('CASE WHEN level_performance = "poor" THEN 1 WHEN level_performance = "fair" THEN 2 WHEN level_performance = "moderate" THEN 3 WHEN level_performance = "good" THEN 4 ELSE 5 END')) : 1;
+            $overallPerformance = $averagePerformance <= 1.5 ? 'poor' : ($averagePerformance <= 2.5 ? 'fair' : ($averagePerformance <= 3.5 ? 'moderate' : ($averagePerformance <= 4.5 ? 'good' : 'excellent')));
+
+            // Update user's total_score, overall_performance, and current_level based on calculated values
+            $user->total_score = $totalScore;
+            $user->overall_performance = $overallPerformance;
+
+            // Determine current_level based on highest level played
+            $highestLevelPlayed = $user->items()->max('level_name');
+
+            if ($highestLevelPlayed === 'level5') {
+                $user->current_level = 'level5';
+            } elseif ($highestLevelPlayed === 'level4') {
+                $user->current_level = 'level4';
+            } elseif ($highestLevelPlayed === 'level3') {
+                $user->current_level = 'level3';
+            } elseif ($highestLevelPlayed === 'level2') {
+                $user->current_level = 'level2';
+            } else {
+                $user->current_level = 'level1';
+            }
+            // Save the updated user data
+            $user->save();
             return response()->json([
                 'status' => 'success',
-                'data' => $item
+                'data' => $item,
+                'message' => 'Item created successfully',
+                'user_details' => $user
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+    //update item
+    public function updateItem(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'level_name' => 'required',
+                'level_wise_score' => 'required',
+                'level_performance' => 'required',
+                'pose_image_url' => 'required'
+            ]);
+            $item = Item::findOrFail($id);
+
+            $item->level_name = $request->level_name;
+            $item->level_wise_score = $request->level_wise_score;
+            $item->level_performance = $request->level_performance;
+            $item->pose_image_url = $request->pose_image_url;
+            $item->save();
+            // Find the user by ID
+            $user = User::findOrFail(Auth::id());
+            // Calculate total score based on the sum of level_wise_score from items table
+            $totalScore = $user->items()->sum('level_wise_score');
+
+            // Calculate overall performance based on average of level_performance from items table
+            $totalItems = $user->items()->count();
+            $averagePerformance = $totalItems > 0 ? $user->items()->avg(DB::raw('CASE WHEN level_performance = "poor" THEN 1 WHEN level_performance = "fair" THEN 2 WHEN level_performance = "moderate" THEN 3 WHEN level_performance = "good" THEN 4 ELSE 5 END')) : 1;
+            $overallPerformance = $averagePerformance <= 1.5 ? 'poor' : ($averagePerformance <= 2.5 ? 'fair' : ($averagePerformance <= 3.5 ? 'moderate' : ($averagePerformance <= 4.5 ? 'good' : 'excellent')));
+
+            // Update user's total_score, overall_performance, and current_level based on calculated values
+            $user->total_score = $totalScore;
+            $user->overall_performance = $overallPerformance;
+
+            // Determine current_level based on highest level played
+            $highestLevelPlayed = $user->items()->max('level_name');
+
+            if ($highestLevelPlayed === 'level5') {
+                $user->current_level = 'level5';
+            } elseif ($highestLevelPlayed === 'level4') {
+                $user->current_level = 'level4';
+            } elseif ($highestLevelPlayed === 'level3') {
+                $user->current_level = 'level3';
+            } elseif ($highestLevelPlayed === 'level2') {
+                $user->current_level = 'level2';
+            } else {
+                $user->current_level = 'level1';
+            }
+            // Save the updated user data
+            $user->save();
+            return response()->json([
+                'status' => 'success',
+                'data' => $item,
+                'message' => 'Item updated successfully',
+                'user_details' => $user
             ]);
         } catch (\Throwable $th) {
             return response()->json([

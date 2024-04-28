@@ -19,6 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/users', [AdminController::class, 'alluser'])->name('users');
     //search user
     Route::get('/search', [AdminController::class, 'search'])->name('search');
+    //overall performance search
     //user view
     Route::get('/user/{id}', [UserInformationController::class, 'show'])->name('user.view');
     //user edit

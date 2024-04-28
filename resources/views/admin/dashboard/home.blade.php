@@ -17,7 +17,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="customers.php">
+                        <a href="{{route('users')}}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -34,12 +34,12 @@
                                     <i class="fa fa-outdent fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">{{$levelUser['poor']}}</div>
+                                    <div class="huge">{{$levelUser['poor']-1}}</div>
                                     <div>Poor Performance</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{route('search',['search_string' => 'poor'])}}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{route('search',['search_string' => 'fair'])}}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{route('search',['search_string' => 'moderate'])}}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -105,7 +105,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{route('search',['search_string' => 'good'])}}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{route('search',['search_string' => 'excellent'])}}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

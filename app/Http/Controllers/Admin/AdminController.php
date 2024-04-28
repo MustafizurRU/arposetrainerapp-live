@@ -92,7 +92,6 @@ class AdminController extends Controller
             })->with('items')->paginate(10);
         return view('admin.dashboard.users', compact('search','users_data'));
     }
-
     public function levelwiseuser()
     {
         $users = User::all();
