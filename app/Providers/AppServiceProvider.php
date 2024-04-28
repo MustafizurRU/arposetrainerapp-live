@@ -34,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
                 header("Location: $newUrl");
             }
         }
-        parent::boot();
 //        if(env('APP_ENV') === 'production') {
 //            URL::forceScheme('https');
 //        }
