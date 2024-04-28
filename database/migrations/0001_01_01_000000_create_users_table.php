@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('current_level', ['level1', 'level2', 'level3', 'level4', 'level5'])->default('level1');
             $table->integer('total_score')->default(0);
             $table->enum('overall_performance', ['poor', 'fair', 'moderate', 'good', 'excellent'])->default('poor');
+            $table->enum('role', ['superadmin', 'user'])->default('user');
             $table->rememberToken();
             $table->timestamps();
         });
