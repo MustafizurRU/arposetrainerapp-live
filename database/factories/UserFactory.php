@@ -41,4 +41,14 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+    // Define a method to create a superadmin user
+    public function superadmin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'name' => 'Md Mustafizur Rahman', // Change this name if needed
+            'email' => 'mustafizur@gmail.com', // Change this email if needed
+            'password' => Hash::make('secret'), // Change this password if needed
+            'role' => 'superadmin', // Assuming your user model has a 'role' attribute
+        ]);
+    }
 }
