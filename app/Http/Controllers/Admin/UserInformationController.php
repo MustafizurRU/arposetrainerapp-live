@@ -55,9 +55,14 @@ class UserInformationController extends Controller
      */
     public function edit(string $id)
     {
-        //edit user info
-        $user = User::find($id);
-        return view('admin.dashboard.edit_userinfo', compact('user'));
+        //check if user is super admin
+        if (Auth::user()->role == 'superadmin') {
+            $user = User::find($id);
+            return view('admin.dashboard.edit_userinfo', compact('user'));
+        } else {
+            $user = User::find(Auth::id());
+            return view('admin.useronly.edit_userinfo', compact('user'));
+        }
     }
 
     /**
