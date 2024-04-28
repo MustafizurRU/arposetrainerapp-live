@@ -46,7 +46,7 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'name' => 'Md Mustafizur Rahman', // Change this name if needed
-            'email' => 'mustafizur@gmail.com', // Change this email if needed
+            'email' => 'mustafizur.cd@gmail.com', // Change this email if needed
             'password' => Hash::make('secret'), // Change this password if needed
             'role' => 'superadmin', // Assuming your user model has a 'role' attribute
         ]);
