@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -26,13 +24,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
-        if(env('APP_ENV') === 'production') {
-            $url = Request::url();
-            $check = strstr($url, 'https://');
-            if($check){
-                $newUrl = str_replace('https://', 'http://', $url);
-                header("Location: $newUrl");
-            }
+        if(env('APP_ENV') !== 'local') {
+            URL::forceScheme('https');
         }
 //        if(env('APP_ENV') === 'production') {
 //            URL::forceScheme('https');
