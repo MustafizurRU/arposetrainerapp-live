@@ -53,6 +53,7 @@ class ApiController extends Controller
             ]);
             return response()->json([
                 'status' => 'success',
+                'message' => 'User registered successfully',
                 'data' => $user
             ]);
         } catch (\Throwable $th) {
@@ -69,6 +70,7 @@ class ApiController extends Controller
             $items = User::with('items')->get();
             return response()->json([
                 'status' => 'success',
+                'message' => 'Items retrieved successfully',
                 'data' => $items
             ]);
         } catch (\Throwable $th) {
