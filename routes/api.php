@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         $user = $request->user();
-        return response()->json(['success' => true, 'message' => 'User information retrieved successfully', 'user' => $user], 200);
+        return response()->json(['status' => 'success',  'message' => 'User information retrieved successfully', 'user' => $user], 200);
     });
 
     Route::get('/all-user', function (Request $request) {
         $users = $request->user()->all();
-        return response()->json(['success' => true, 'message' => 'All users retrieved successfully', 'users' => $users], 200);
+        return response()->json(['status' => 'success', 'message' => 'All users retrieved successfully', 'users' => $users], 200);
     });
 });
 
