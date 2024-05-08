@@ -202,6 +202,26 @@ class ApiController extends Controller
             ], 500);
         }
     }
+    //level wise user score, overall performance, image url
+    public function levelWiseUserData(Request $request)
+    {
+        try {
+            $user = User::findOrFail(Auth::id());
+            $level = $request->level;
+            $levelWiseData = $user->items()->where('level_name', $level)->get();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Level wise score retrieved successfully',
+                'level' => $level,
+                'data' => $levelWiseData
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
 
 // Upload an Image File to Cloudinary with One line of Code
     public function uploadImage(Request $request)
