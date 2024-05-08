@@ -215,7 +215,8 @@ class ApiController extends Controller
     {
         try {
             $request->validate([
-                'level_name' => 'required',]);
+                'level_name' => 'required']);
+            dd($request->level_name);
             $user = User::findOrFail(Auth::id());
             $level = $request->level_name;
             $levelWiseData = $user->items()->where('level_name', $level)->get();
