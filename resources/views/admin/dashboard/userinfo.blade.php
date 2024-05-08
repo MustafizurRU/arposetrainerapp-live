@@ -43,7 +43,7 @@
                 <div class="col-md-2"></div>
             </div>
         </div>
-        @foreach($user->items as $item)
+        @foreach($user->items->sortBy('level_name') as $item)
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="col-md-9 heading_title">
