@@ -29,3 +29,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/login', [ApiController::class, 'login']);
 //register
 Route::post('/register', [ApiController::class, 'register']);
+
+//upload image
+Route::post('/upload-image', [ApiController::class, 'uploadImage']);
+//update image
+Route::put('/update-image/{id}', [ApiController::class, 'updateImage']);

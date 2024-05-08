@@ -6,9 +6,11 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\User;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
@@ -199,5 +201,57 @@ class ApiController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+// Upload an Image File to Cloudinary with One line of Code
+    public function uploadImage(Request $request)
+    {
+       $validator = Validator::make($request->all(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Please Fix the following errors',
+                'error' => $validator->errors()
+            ]);
+        }
+        $image = $request->file('image')->getRealPath();
+        // Upload image to Cloudinary specific folder
+        $cloudinary = Cloudinary::upload($image, [
+            'folder' => 'PoseImages'
+        ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Image uploaded successfully',
+            'url' => $cloudinary->getSecurePath()
+        ]);
+    }
+    //update image
+    public function updateImage(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Please Fix the following errors',
+                'error' => $validator->errors()
+            ]);
+        }
+        $item = Item::findOrFail($id);
+        $image = $request->file('image')->getRealPath();
+        // Upload image to Cloudinary specific folder
+        $cloudinary = Cloudinary::upload($image, [
+            'folder' => 'PoseImages'
+        ]);
+        $item->pose_image_url = $cloudinary->getSecurePath();
+        $item->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Image updated successfully',
+            'url' => $cloudinary->getSecurePath()
+        ]);
     }
 }
