@@ -143,7 +143,7 @@ class ApiController extends Controller
         }
     }
     //update item
-    public function updateItem(Request $request, $id)
+    public function updateItem(Request $request)
     {
         try {
             $request->validate([
@@ -152,13 +152,21 @@ class ApiController extends Controller
                 'level_performance' => 'required',
                 'pose_image_url' => 'required'
             ]);
-            $item = Item::findOrFail($id);
-
+            $user = User::findOrFail(Auth::id());
+            $level = $request->level_name;
+            $item = $user->items()->where('level_name', $level)->first();
+            if (!$item) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Item not found'
+                ], 404);
+            }
             $item->level_name = $request->level_name;
             $item->level_wise_score = $request->level_wise_score;
             $item->level_performance = $request->level_performance;
             $item->pose_image_url = $request->pose_image_url;
             $item->save();
+
             // Find the user by ID
             $user = User::findOrFail(Auth::id());
             // Calculate total score based on the sum of level_wise_score from items table
@@ -206,8 +214,10 @@ class ApiController extends Controller
     public function levelWiseUserData(Request $request)
     {
         try {
+            $request->validate([
+                'level_name' => 'required',]);
             $user = User::findOrFail(Auth::id());
-            $level = $request->level;
+            $level = $request->level_name;
             $levelWiseData = $user->items()->where('level_name', $level)->get();
             return response()->json([
                 'status' => 'success',

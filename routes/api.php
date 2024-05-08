@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/create-item', [ApiController::class, 'createItem']);
     Route::get('/all-items', [ApiController::class, 'allItems']);
     //update item
-    Route::put('/update-item/{id}', [ApiController::class, 'updateItem']);
+    Route::put('/update-item', [ApiController::class, 'updateItem']);
     //levelWise user level Data
     Route::get('/level-wise-data', [ApiController::class, 'levelWiseUserData']);
 });
