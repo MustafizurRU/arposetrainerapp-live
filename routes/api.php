@@ -25,6 +25,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/update-item', [ApiController::class, 'updateItem']);
     //levelWise user level Data
     Route::get('/level-wise-data', [ApiController::class, 'levelWiseUserData']);
+
+    //upload image
+    Route::post('/upload-image', [ApiController::class, 'uploadImage']);
+    //update image
+    Route::put('/update-image/{id}', [ApiController::class, 'updateImage']);
 });
 
 //login
@@ -32,7 +37,4 @@ Route::post('/login', [ApiController::class, 'login']);
 //register
 Route::post('/register', [ApiController::class, 'register']);
 
-//upload image
-Route::post('/upload-image', [ApiController::class, 'uploadImage']);
-//update image
-Route::put('/update-image/{id}', [ApiController::class, 'updateImage']);
+
