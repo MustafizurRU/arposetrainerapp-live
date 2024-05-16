@@ -81,11 +81,11 @@
                                 <td>:</td>
                                 <td>{{$item->level_performance}}</td>
                             </tr>
-                            <tr>
-                                <td>Pose Image</td>
-                                <td>:</td>
-                                <td><img src="{{$item->pose_image_url}}" style="width: 600px; height: auto;" alt="PoseImage"></td>
-                            </tr>
+{{--                            <tr>--}}
+{{--                                <td>Pose Image</td>--}}
+{{--                                <td>:</td>--}}
+{{--                                <td><img src="{{$item->pose_image_url}}" style="width: 600px; height: auto;" alt="PoseImage"></td>--}}
+{{--                            </tr>--}}
                         </table>
                     </div>
                     <div class="col-md-2"></div>
